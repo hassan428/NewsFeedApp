@@ -30,8 +30,10 @@ export const SignUp = () => {
       auth()
         .createUserWithEmailAndPassword(data.email, data.password)
         .then(({user, additionalUserInfo}) => {
+          const {email, uid} = user;
           console.log('user', user);
-          navigation.navigate('BottomTabs');
+          navigation.navigate('BottomTabs', {email, uid});
+          // navigation.setOptions(user);
         })
         .catch(err => {
           console.log('err', err);
@@ -39,6 +41,11 @@ export const SignUp = () => {
         });
     }
     console.log(data);
+  };
+
+  const inputValue = (text, id) => {
+    text = text.split(' ').join('');
+    setData({...data, [id]: text});
   };
 
   return (
@@ -56,25 +63,29 @@ export const SignUp = () => {
         </View>
 
         <Custom_input
+          keyboardType="default"
           placeholder="Username"
           myStyle={{marginVertical: 12}}
           id="username"
+          value={data.username}
           icon={<Feather size={25} name="user" />}
-          inputValue={(text, id) => setData({...data, [id]: text})}
+          inputValue={inputValue}
         />
 
         <Custom_input
           keyboardType="email-address"
           placeholder="Email Address"
           id="email"
+          value={data.email}
           icon={<MaterialCommunityIcons size={25} name="email-outline" />}
           myStyle={{marginVertical: 12}}
-          inputValue={(text, id) => setData({...data, [id]: text})}
+          inputValue={inputValue}
         />
 
         <Password_input
-          inputValue={(text, id) => setData({...data, [id]: text})}
+          inputValue={inputValue}
           myStyle={{marginVertical: 12}}
+          value={data.password}
         />
 
         <SomeText myStyle={{color: 'red'}} text={errorMsg} />

@@ -39,7 +39,8 @@ export const RenderTodo = ({todo, edit, del}) => {
   const [render, setRender] = useState(todo);
 
   useEffect(() => {
-    setRender(todo);
+    if (todo) setRender(todo);
+    else setRender([]);
   }, [todo]);
 
   const {container, individual_div, text, btn_div} = styles;
@@ -47,17 +48,17 @@ export const RenderTodo = ({todo, edit, del}) => {
   return (
     <ScrollView style={container}>
       <View>
-        {render.map((obj, i) => {
+        {render.map(({key, value}, i) => {
           return (
             <View key={i} style={[container, individual_div]}>
-              <Text style={text}>{obj}</Text>
+              <Text style={text}>{value}</Text>
 
-              <View key={i} style={[btn_div]}>
-                <TouchableOpacity onPress={() => edit(i)}>
+              <View style={[btn_div]}>
+                <TouchableOpacity onPress={() => edit(key)}>
                   <MaterialIcons name="edit-note" size={30} />
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => del(i)}>
+                <TouchableOpacity onPress={() => del(key)}>
                   <MaterialIcons name="delete" size={25} />
                 </TouchableOpacity>
               </View>

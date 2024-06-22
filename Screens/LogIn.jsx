@@ -19,6 +19,11 @@ export const LogIn = () => {
 
   const navigation = useNavigation();
 
+  const inputValue = (text, id) => {
+    text = text.split(' ').join('');
+    setData({...data, [id]: text});
+  };
+
   const submit_handle = () => {
     const values = Object.values(data);
     const isEmpty = values.some(
@@ -30,9 +35,11 @@ export const LogIn = () => {
       setErrorMsg('');
       auth()
         .signInWithEmailAndPassword(data.email, data.password)
-        .then(res => {
-          navigation.navigate('BottomTabs');
-          console.log('res', res);
+        .then(({user, additionalUserInfo}) => {
+          const {email, uid} = user;
+          console.log('user', user);
+          navigation.navigate('BottomTabs', {email, uid});
+          // navigation.setOptions(user);
         })
         .catch(err => {
           console.log('err', err);
@@ -40,7 +47,7 @@ export const LogIn = () => {
         });
     }
   };
-  console.log(data);
+  // console.log(data);
 
   return (
     <>
@@ -61,13 +68,12 @@ export const LogIn = () => {
             keyboardType="email-address"
             placeholder="Email Address"
             id="email"
+            value={data.email}
             icon={<MaterialCommunityIcons size={25} name="email-outline" />}
-            inputValue={(text, id) => setData({...data, [id]: text})}
+            inputValue={inputValue}
           />
 
-          <Password_input
-            inputValue={(text, id) => setData({...data, [id]: text})}
-          />
+          <Password_input inputValue={inputValue} value={data.password} />
 
           <SomeText myStyle={{color: 'red'}} text={errorMsg} />
 

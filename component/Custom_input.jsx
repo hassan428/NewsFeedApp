@@ -36,17 +36,18 @@ const Custom_input = props => {
   );
 };
 
-const Password_input = ({myStyle, inputValue}) => {
+const Password_input = props => {
   const [visibility, setVisibility] = useState(true);
 
   return (
-    <View style={[input_view, {...myStyle}]}>
+    <View style={[input_view, {...props.myStyle}]}>
       <Octicons size={25} name="lock" />
       <TextInput
         placeholder="Password"
         style={[input, fontFamily]}
         secureTextEntry={visibility}
-        onChangeText={text => inputValue(text, 'password')}
+        {...props}
+        onChangeText={text => props.inputValue(text, 'password')}
       />
       {visibility ? (
         <MaterialIcons

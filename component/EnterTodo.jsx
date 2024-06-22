@@ -12,8 +12,7 @@ const styles = StyleSheet.create({
   },
 });
 export const EnterTodo = ({addTodo, delAll}) => {
-  const [todo, setTodo] = useState({});
-  const [value, setvalue] = useState(todo);
+  const [value, setvalue] = useState(null);
   const {typeTodo} = styles;
 
   return (
@@ -22,16 +21,13 @@ export const EnterTodo = ({addTodo, delAll}) => {
         myStyle={{width: '70%'}}
         value={value}
         placeholder={'Enter Todos'}
-        inputValue={e => {
-          setvalue(e);
-          setTodo(e);
-        }}
+        inputValue={setvalue}
       />
 
       <TouchableOpacity
         onPress={() => {
-          setvalue('');
-          addTodo(todo);
+          if (value) addTodo(value);
+          setvalue(null);
         }}>
         <MaterialIcons name="send" size={25} />
       </TouchableOpacity>

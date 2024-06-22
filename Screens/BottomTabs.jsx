@@ -7,12 +7,16 @@ import {LogIn} from './LogIn';
 const Tab = createBottomTabNavigator();
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {useRoute} from '@react-navigation/native';
 
 const BottomTabs = () => {
+  const {params} = useRoute();
+
   const tabScreenArray = [
     {
       name: 'Todo',
       component: Todo,
+      initialParams: params,
       options: {
         tabBarIcon: ({color, size, focused}) => (
           <MaterialIcons size={size} name="schedule" color={color} />
@@ -49,12 +53,13 @@ const BottomTabs = () => {
         tabBarActiveBackgroundColor: 'pink',
         tabBarInactiveBackgroundColor: 'white',
       }}>
-      {tabScreenArray.map(({name, component, options}, i) => (
+      {tabScreenArray.map(({name, component, options, initialParams}, i) => (
         <Tab.Screen
           name={name}
           component={component}
           key={i}
           options={options}
+          initialParams={initialParams}
         />
       ))}
     </Tab.Navigator>
