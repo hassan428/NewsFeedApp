@@ -3,18 +3,15 @@ import React from 'react';
 
 const styles = StyleSheet.create({
   heading: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    padding: 5,
+    fontSize: 30,
+    fontWeight: '900',
   },
   fontFamily: {
     fontFamily: 'arial',
   },
   heading_text: {
-    width: 250,
-    textAlign: 'center',
+    fontSize: 20,
     fontWeight: 'bold',
-    lineHeight: 25,
   },
 });
 
@@ -25,17 +22,17 @@ const Heading = ({myStyle, text}) => {
 };
 
 const HeadingText = ({myStyle, text}) => {
-  return (
-    <Text style={[heading_text, fontFamily, {...myStyle}]}>
-      {' '}
-      By {text} you are agreeing our{' '}
-      <Text style={{color: 'blue'}}>Term and Privacy Policy</Text>
-    </Text>
-  );
+  return <Text style={[heading_text, fontFamily, {...myStyle}]}>{text}</Text>;
 };
 
-const SomeText = ({myStyle, text}) => {
-  return <Text style={[fontFamily, {...myStyle}]}>{text}</Text>;
+const SomeText = props => {
+  return (
+    <Text
+      style={[fontFamily, {textAlign: 'center', ...props.myStyle}]}
+      {...props}>
+      {props.text}
+    </Text>
+  );
 };
 
 export {Heading, HeadingText, SomeText};

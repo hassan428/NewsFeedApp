@@ -1,62 +1,56 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet} from 'react-native';
 import React from 'react';
+import {Button, SegmentedButtons} from 'react-native-paper';
+import {useNavigation} from '@react-navigation/native';
 
 const styles = StyleSheet.create({
-  active_btn: {
-    color: '#00A3FF',
-    borderBottomWidth: 2,
-    borderBottomColor: '#00A3FF',
-    padding: 5,
-    fontSize: 15,
-  },
-  inActive_btn: {
-    color: 'gray',
-    padding: 5,
-    fontSize: 15,
-  },
   fontFamily: {
     fontFamily: 'arial',
   },
   submit_btn: {
     width: '100%',
-    padding: 10,
-    margin: 10,
-    backgroundColor: '#00A3FF',
+    padding: 5,
+    backgroundColor: '#fec549',
     borderRadius: 10,
   },
   submit_btn_text: {
     textAlign: 'center',
     fontSize: 20,
-    color: 'white',
+    color: '#4c5ca2',
   },
 });
-const {fontFamily, active_btn, inActive_btn, submit_btn, submit_btn_text} =
-  styles;
+const {fontFamily, submit_btn, submit_btn_text} = styles;
 
-const ActiveBtn = ({myStyle, text}) => {
+export const Submit_btn = props => {
+  const {myStyle, myLabelStyle, text, onPress} = props;
   return (
-    <TouchableOpacity style={{borderWidth: 0}}>
-      <Text style={[fontFamily, active_btn, {...myStyle}]}>{text}</Text>
-    </TouchableOpacity>
+    <Button
+      onPress={onPress}
+      style={[submit_btn, {...myStyle}]}
+      labelStyle={[submit_btn_text, fontFamily, {...myLabelStyle}]}
+      {...props}>
+      {text}
+    </Button>
   );
 };
 
-const InActiveBtn = ({myStyle, text, navigation}) => {
+export const Swith_screen = props => {
+  const {navigate} = useNavigation();
+  const [value, setValue] = React.useState('');
+
+  // console.log(value);
+
+  const navigate_screen = val => {
+    setValue(val);
+    navigate(val);
+  };
+
   return (
-    <TouchableOpacity
-      style={{borderWidth: 0}}
-      onPress={() => navigation.navigate(text)}>
-      <Text style={[fontFamily, inActive_btn, {...myStyle}]}>{text}</Text>
-    </TouchableOpacity>
+    <SegmentedButtons
+      style={{marginBottom: 10}}
+      {...props}
+      value={value}
+      onValueChange={navigate_screen}
+    />
   );
 };
-
-const Submit_btn = ({myStyle, text, onPress}) => {
-  return (
-    <TouchableOpacity onPress={onPress} style={submit_btn}>
-      <Text style={[fontFamily, submit_btn_text, {...myStyle}]}>{text}</Text>
-    </TouchableOpacity>
-  );
-};
-
-export {ActiveBtn, InActiveBtn, Submit_btn};

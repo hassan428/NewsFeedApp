@@ -1,71 +1,49 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Todo} from './Todos';
-import {SignUp} from './SignUp';
-import {LogIn} from './LogIn';
-const Tab = createBottomTabNavigator();
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {useRoute} from '@react-navigation/native';
+import {News_feed} from './News_feed';
+import {Post_news_feed} from './Post_news_feed';
+const Tab = createBottomTabNavigator();
 
-const BottomTabs = () => {
-  const {params} = useRoute();
-
+export const BottomTabs = () => {
+  // const {params} = useRoute();
   const tabScreenArray = [
     {
-      name: 'Todo',
-      component: Todo,
-      initialParams: params,
+      name: 'News Feed',
+      component: News_feed,
+      // initialParams: params,
       options: {
         tabBarIcon: ({color, size, focused}) => (
-          <MaterialIcons size={size} name="schedule" color={color} />
+          <Ionicons size={size} name="newspaper" color={color} />
         ),
+        tabBarLabelStyle: {fontSize: 15},
       },
     },
-    // {
-    //   name: 'SignUp',
-    //   component: SignUp,
-    //   options: {
-    //     tabBarIcon: ({color, size, focused}) => (
-    //       <FontAwesome size={size} name="sign-in" color={color} />
-    //     ),
-    //   },
-    // },
-    // {
-    //   name: 'LogIn',
-    //   component: LogIn,
-    //   options: {
-    //     tabBarIcon: ({color, size, focused}) => (
-    //       <FontAwesome size={size} name="sign-in" color={color} />
-    //     ),
-    //   },
-    // },
+    {
+      name: 'Post Feed',
+      component: Post_news_feed,
+      // initialParams: params,
+      options: {
+        tabBarIcon: ({color, size, focused}) => (
+          <MaterialIcons size={size} name="post-add" color={color} />
+        ),
+        tabBarLabelStyle: {fontSize: 15},
+      },
+    },
   ];
-
   return (
     <Tab.Navigator
-      initialRouteName="Todo"
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: 'blue',
+        tabBarActiveTintColor: '#4c5ca2',
         tabBarInactiveTintColor: 'gray',
-        tabBarActiveBackgroundColor: 'pink',
+        tabBarActiveBackgroundColor: '#fec549',
         tabBarInactiveBackgroundColor: 'white',
       }}>
-      {tabScreenArray.map(({name, component, options, initialParams}, i) => (
-        <Tab.Screen
-          name={name}
-          component={component}
-          key={i}
-          options={options}
-          initialParams={initialParams}
-        />
+      {tabScreenArray.map((screenDetals, i) => (
+        <Tab.Screen key={i} {...screenDetals} />
       ))}
     </Tab.Navigator>
   );
 };
-
-export {BottomTabs};
-
-const styles = StyleSheet.create({});

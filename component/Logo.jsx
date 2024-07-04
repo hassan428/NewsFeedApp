@@ -4,43 +4,42 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 export const Logo = ({iconSize, fontSize}) => {
-  const {iconContainer, iconSpacing, splash_text} = styles;
-
   const icon = [
     {
       Tag: MaterialIcons,
-      name: 'check-circle',
-      color: '#4CAF50',
+      name: 'public',
+      color: '#4c5ca2',
     },
     {
       Tag: FontAwesome5,
-      name: 'tasks',
-      color: '#FF9800',
+      name: 'rss',
+      color: '#fec549',
     },
     {
       Tag: MaterialIcons,
-      name: 'event-note',
-      color: '#2196F3',
+      name: 'article',
+      color: '#4CAF50',
     },
   ];
 
   const text = [
     {
-      letter: 'TO',
+      letter: 'NEW',
+      color: '#4c5ca2',
+    },
+    {
+      letter: 'SF',
+      color: '#fec549',
+    },
+    {
+      letter: 'EED',
       color: '#4CAF50',
-    },
-    {
-      letter: 'D',
-      color: '#FF9800',
-    },
-    {
-      letter: 'OS',
-      color: '#2196F3',
     },
   ];
 
+  const {iconContainer, iconSpacing, splash_text, container} = styles;
   return (
-    <>
+    <View style={[, container]}>
       <View style={iconContainer}>
         {icon.map(({Tag, name, color}, i) => (
           <Tag
@@ -53,21 +52,25 @@ export const Logo = ({iconSize, fontSize}) => {
         ))}
       </View>
 
-      <Text style={[splash_text, {fontSize}]}>
-        {text.map(({letter, color}, i) => (
-          <Text style={{color}} key={i}>
-            {letter}
-          </Text>
-        ))}
-      </Text>
-    </>
+      <View>
+        <Text style={[splash_text, {fontSize}]}>
+          {text.map(({letter, color}, i) => (
+            <Text style={{color}} key={i}>
+              {letter}
+            </Text>
+          ))}
+        </Text>
+      </View>
+    </View>
   );
 };
-
 const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   iconContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
   },
   iconSpacing: {
     marginLeft: 2,

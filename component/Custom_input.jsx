@@ -1,68 +1,57 @@
 import Octicons from 'react-native-vector-icons/Octicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
+import {TextInput} from 'react-native-paper';
 const styles = StyleSheet.create({
   fontFamily: {
     fontFamily: 'arial',
   },
   input: {
-    width: '85%',
+    width: '100%',
     padding: 0,
+    margin: 0,
     fontSize: 15,
   },
-  input_view: {
-    marginVertical: 20,
-    width: '100%',
-    borderBottomWidth: 2,
-    borderBottomColor: 'gray',
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 5,
-  },
 });
-const {fontFamily, input_view, input} = styles;
+const {fontFamily, input} = styles;
 
 const Custom_input = props => {
   return (
-    <View style={[input_view, {...props.myStyle}]}>
-      {props.icon}
-      <TextInput
-        {...props}
-        style={[input, fontFamily]}
-        onChangeText={text => props.inputValue(text, props.id)}
-      />
-    </View>
+    <TextInput
+      mode="outlined"
+      right={<TextInput.Icon icon={props.icon} />}
+      {...props}
+      style={[input, fontFamily]}
+      contentStyle={fontFamily}
+      onChangeText={text => props.inputValue(text, props.id)}
+    />
   );
 };
 
 const Password_input = props => {
   const [visibility, setVisibility] = useState(true);
+  const toggle = () => setVisibility(pre => !pre);
 
   return (
-    <View style={[input_view, {...props.myStyle}]}>
-      <Octicons size={25} name="lock" />
-      <TextInput
-        placeholder="Password"
-        style={[input, fontFamily]}
-        secureTextEntry={visibility}
-        {...props}
-        onChangeText={text => props.inputValue(text, 'password')}
-      />
-      {visibility ? (
-        <MaterialIcons
-          onPress={() => setVisibility(false)}
-          size={25}
-          name="visibility"
-        />
-      ) : (
-        <MaterialIcons
-          onPress={() => setVisibility(true)}
-          size={25}
-          name="visibility-off"
-        />
-      )}
-    </View>
+    <TextInput
+      style={[input]}
+      mode="outlined"
+      label="Password"
+      placeholder="Password"
+      secureTextEntry={visibility}
+      contentStyle={fontFamily}
+      onChangeText={text => props.inputValue(text, 'password')}
+      // left={<TextInput.Icon icon="lock-outline" />}
+      right={
+        visibility ? (
+          <TextInput.Icon icon="eye" onPress={toggle} />
+        ) : (
+          <TextInput.Icon icon="eye-off" onPress={toggle} />
+        )
+      }
+      {...props}
+    />
   );
 };
 

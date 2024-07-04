@@ -3,25 +3,48 @@ import React from 'react';
 import Octicons from 'react-native-vector-icons/Octicons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
+import {IconButton} from 'react-native-paper';
+
+const icon = [
+  {
+    icon: 'facebook',
+    iconColor: 'blue',
+    size: 40,
+  },
+  {
+    icon: 'instagram',
+    iconColor: '#C10654',
+    size: 40,
+  },
+  {
+    icon: 'linkedin',
+    iconColor: '#126bc4',
+    size: 40,
+  },
+  {
+    icon: 'github',
+    iconColor: 'black',
+    size: 40,
+  },
+];
+
+const Connect_with_icon = () => {
+  const {icon_view} = styles;
+
+  return (
+    <View style={[icon_view]}>
+      {icon.map((obj, i) => (
+        <IconButton {...obj} key={i} onPress={() => console.log('Pressed')} />
+      ))}
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   icon_view: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 25,
   },
 });
-
-const {icon_view} = styles;
-const Connect_with_icon = () => {
-  return (
-    <View style={[icon_view]}>
-      <Ionicons size={40} color={'blue'} name="logo-facebook" />
-      <Entypo size={40} color={'#C10654'} name="instagram-with-circle" />
-      <Entypo size={40} color={'#0386D0'} name="linkedin-with-circle" />
-      <Octicons size={40} name="mark-github" />
-    </View>
-  );
-};
-
 export {Connect_with_icon};
